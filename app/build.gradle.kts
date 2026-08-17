@@ -5,11 +5,7 @@ plugins {
 
 android {
     namespace = "com.kernelvector.tuitionlord"
-    compileSdk {
-        // compileSdk 36 (Android 9/15 — current Play Store requirement as of Aug 2026)
-        // Defers Android 17-specific compile-time features to future phase
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.kernelvector.tuitionlord"
@@ -69,13 +65,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-        }
-    }
     buildFeatures {
         compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
 
