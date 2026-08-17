@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        PERMISSION POLICY:
+        This app is deliberately configured with minimal permissions:
+        
+        PRESENT (implicit, auto-included):
+        - INTERNET: Required by Google Play Services (AdMob)
+        - com.google.android.gms.permission.AD_ID: Required by Google Play Services
+        
+        DELIBERATELY ABSENT:
+        - READ_CONTACTS: Guardian call/message uses ACTION_DIAL and ACTION_SENDTO intents (require no permissions)
+        - READ_CALENDAR / WRITE_CALENDAR: Schedule data stored in-app only; never syncs with device calendar
+        - POST_NOTIFICATIONS: Deferred to future phase; must be requested at runtime in-context, never on first launch
+        - READ_PHONE_STATE, CALL_PHONE: Not applicable (using intents only)
+        - CAMERA, MICROPHONE: No multimedia features in this phase
+        
+        See README.md for architecture and privacy notes.
+    -->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TuitionLord">
+
+        <!-- AdMob Test App ID: Do not use for real ads -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TuitionLord"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
