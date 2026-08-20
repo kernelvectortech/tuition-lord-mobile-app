@@ -1,4 +1,4 @@
-# Tuition Lord — Android App
+# Tuition Lord — Mobile App
 
 Local-first, offline tuition tracker for home tutors. No backend, no login, all data stored on-device.
 
@@ -43,7 +43,7 @@ Regular = Updated as needed for new features
 1. **Clone the repository:**
    ```bash
    git clone <repo-url>
-   cd tuition-lord-android
+   cd tuition-lord-mobile-app
    ```
 
 2. **Open in Android Studio:**
