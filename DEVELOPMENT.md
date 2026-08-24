@@ -162,23 +162,25 @@ app/src/test/java/com/kernelvector/tuitionlord/
 
 ## Next Phase: Database (Phase 2)
 
-When ready to add database layer:
-1. Add Room dependency to `build.gradle.kts`
-2. Create `@Entity` classes in `core/` (extend data models)
-3. Create `@Dao` interfaces in `core/` (data access)
-4. Create `Repository` class in `core/` (high-level operations)
-5. Write tests for database queries
+**Decision:** SQLDelight — see [ADR 0001](docs/adr/0001-persistence-library-sqldelight.md) and canonical schema in [`tuition-lord-docs/database/schema.md`](https://github.com/kernelvectortech/tuition-lord-docs/blob/main/database/schema.md).
+
+When ready to add the database layer:
+1. Add SQLDelight Gradle plugin + runtime to `build.gradle.kts` / `libs.versions.toml`
+2. Add `.sq` schema files under `core/` (translate from `schema.md`)
+3. Enable `PRAGMA foreign_keys = ON` at connection time
+4. Create `Repository` classes in `core/` (high-level operations over generated queries)
+5. Write tests for queries and repositories (in-memory driver)
 
 Example structure:
 ```
 core/
-├── entity/
-│   ├── SessionEntity.kt           ← Room @Entity
-│   └── GuardianEntity.kt
-├── dao/
-│   ├── SessionDao.kt              ← Room @Dao
-│   └── GuardianDao.kt
+├── db/
+│   ├── student.sq
+│   ├── cycle.sq
+│   ├── class_day.sq
+│   ├── student_schedule.sq
+│   └── settlement.sq
 └── repository/
-    ├── SessionRepository.kt       ← Business layer
-    └── GuardianRepository.kt
+    ├── StudentRepository.kt       ← Business layer
+    └── CycleRepository.kt
 ```

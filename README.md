@@ -101,7 +101,7 @@ Regular = Updated as needed for new features
 
 - **Single-module:** No KMP `:shared` module yet; deferred to Phase 5 (iOS)
 - **Compose only:** No XML layouts; purely declarative UI
-- **Local data:** SQLite + Room ORM (no cloud sync, no backend)
+- **Local data:** SQLite + SQLDelight (no cloud sync, no backend) — see [ADR 0001](docs/adr/0001-persistence-library-sqldelight.md)
 - **Zero dangerous permissions:** Only implicit `INTERNET` + `AD_ID` from AdMob SDK
 - **Core package boundary:** `core/` reserves business logic for future KMP extraction
 
@@ -123,7 +123,7 @@ Regular = Updated as needed for new features
 
 ---
 
-**Phase 2:** Room database, data models, repository layer  
+**Phase 2:** SQLDelight database, data models, repository layer  
 **Phase 3:** UI screens (dashboard, session tracking, guardian management)  
 **Phase 4:** Local notifications, CSV/PDF export  
 **Phase 5:** Kotlin Multiplatform + iOS
