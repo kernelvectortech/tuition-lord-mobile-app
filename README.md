@@ -2,7 +2,7 @@
 
 Local-first, offline tuition tracker for home tutors. No backend, no login, all data stored on-device.
 
-**Current Phase:** Environment setup ✓ | Demo calculator included ✓ | Ready for Phase 2 (Database & Domain Logic)
+**Current Phase:** Environment setup ✓ | SQLDelight database integrated ✓ | Demo calculator included ✓
 
 ---
 
@@ -15,6 +15,8 @@ app/
 │   │   ├── Calculator.kt          (Demo module: arithmetic operations)
 │   │   └── README.md              (Explains KMP boundary rule)
 │   ├── MainActivity.kt            CRITICAL — Main entry point; update for app initialization
+│   ├── TuitionLordApplication.kt   — Creates the SQLDelight database and repository
+│   ├── database/                   — SQLDelight factory, schema access, and repository example
 │   ├── ui/                        CRITICAL — Composables, screens; most frequent changes
 │   │   ├── screens/
 │   │   │   └── CalculatorScreen.kt (Demo UI: shows how to use Calculator core module)
@@ -104,6 +106,31 @@ Regular = Updated as needed for new features
 - **Local data:** SQLite + SQLDelight (no cloud sync, no backend) — see [ADR 0001](docs/adr/0001-persistence-library-sqldelight.md)
 - **Zero dangerous permissions:** Only implicit `INTERNET` + `AD_ID` from AdMob SDK
 - **Core package boundary:** `core/` reserves business logic for future KMP extraction
+
+---
+
+## Database Example
+
+The app creates the local SQLDelight database on startup. The schema and queries are in:
+
+```text
+app/src/main/sqldelight/com/kernelvector/tuitionlord/database/Tuition.sq
+```
+
+The generated database is created by `TuitionDatabaseFactory`. To insert and read a sample student from Kotlin:
+
+```kotlin
+val students = DatabaseExample.insertAndReadStudent(context)
+```
+
+For normal app code, use the repository exposed by `TuitionLordApplication`:
+
+```kotlin
+val app = applicationContext as TuitionLordApplication
+val students = app.studentRepository.getActiveStudents()
+```
+
+The SQLite file is stored privately on the device as `tuition.db`. Money is stored as integer poisha, dates and timestamps as ISO-8601 text, and SQLite foreign keys are enabled when the driver opens.
 
 ---
 
