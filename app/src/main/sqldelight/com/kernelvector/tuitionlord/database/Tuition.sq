@@ -95,3 +95,119 @@ archiveStudent:
 UPDATE student
 SET is_archived = 1, updated_at = ?
 WHERE id = ?;
+
+
+insertCycle:
+INSERT INTO cycle (
+    id,
+    student_id,
+    idx,
+    start_date,
+    target_sessions,
+    status,
+    settled_at,
+    updated_at
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+getActiveCycle:
+SELECT *
+FROM cycle
+WHERE student_id = ?
+AND status = 'ACTIVE';
+
+getCycleById:
+SELECT *
+FROM cycle
+WHERE id = ?;
+
+settleCycle:
+UPDATE cycle
+SET
+    status = 'SETTLED',
+    settled_at = ?,
+    updated_at = ?
+WHERE id = ?;
+
+
+insertClassDay:
+INSERT INTO class_day (
+    id,
+    student_id,
+    cycle_id,
+    date,
+    slot,
+    status,
+    source,
+    note,
+    created_at,
+    updated_at
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getClassDaysForStudent:
+SELECT *
+FROM class_day
+WHERE student_id = ?
+ORDER BY date DESC;
+
+getHeldClassDaysForCycle:
+SELECT *
+FROM class_day
+WHERE cycle_id = ?
+AND status = 'HELD';
+
+updateClassDayStatus:
+UPDATE class_day
+SET
+    status = ?,
+    updated_at = ?
+WHERE id = ?;
+
+
+getSchedulesForStudent:
+SELECT *
+FROM student_schedule
+WHERE student_id = ?;
+
+insertStudentSchedule:
+INSERT INTO student_schedule (
+    id,
+    student_id,
+    day_of_week,
+    start_time,
+    duration,
+    updated_at
+)
+VALUES (?, ?, ?, ?, ?, ?);
+
+deleteStudentSchedule:
+DELETE FROM student_schedule
+WHERE id = ?;
+
+
+getSettlementByCycleId:
+SELECT *
+FROM settlement
+WHERE cycle_id = ?;
+
+getSettlementsForStudent:
+SELECT *
+FROM settlement
+WHERE student_id = ?
+ORDER BY settled_at DESC;
+
+insertSettlement:
+INSERT INTO settlement (
+    id,
+    student_id,
+    cycle_id,
+    sessions_counted,
+    amount,
+    payment_status,
+    collected_at,
+    settled_at,
+    updated_at,
+    note
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

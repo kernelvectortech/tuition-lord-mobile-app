@@ -13,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kernelvector.tuitionlord.ui.screens.CalculatorScreen  // TOGGLE: Comment to hide calculator
 import com.kernelvector.tuitionlord.ui.theme.TuitionLordTheme
-
+import com.kernelvector.tuitionlord.database.DatabaseExample
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DatabaseExample.testSettlement(this)
         enableEdgeToEdge()
+
         setContent {
             TuitionLordTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
