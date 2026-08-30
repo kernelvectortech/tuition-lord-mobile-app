@@ -2,27 +2,27 @@ package com.kernelvector.tuitionlord.database
 
 class CycleRepository(
     private val database: TuitionDatabase
-) {
+) : BaseRepository <Cycle> {
     fun getActiveCycle(studentId: String): Cycle? =
         database.tuitionQueries
             .getActiveCycle(studentId)
             .executeAsOneOrNull()
 
-    fun getCycleById(cycleId: String): Cycle? =
+    override fun getByID(id: String): Cycle? =
         database.tuitionQueries
-            .getCycleById(cycleId)
+            .getCycleById(id)
             .executeAsOneOrNull()
 
-    fun insertCycle(cycle: Cycle) {
+    override fun insert(item: Cycle) {
         database.tuitionQueries.insertCycle(
-            id = cycle.id,
-            student_id = cycle.student_id,
-            idx = cycle.idx,
-            start_date = cycle.start_date,
-            target_sessions = cycle.target_sessions,
-            status = cycle.status,
-            settled_at = cycle.settled_at,
-            updated_at = cycle.updated_at
+            id = item.id,
+            student_id = item.student_id,
+            idx = item.idx,
+            start_date = item.start_date,
+            target_sessions = item.target_sessions,
+            status = item.status,
+            settled_at = item.settled_at,
+            updated_at = item.updated_at
         )
     }
 

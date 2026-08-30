@@ -2,26 +2,27 @@ package com.kernelvector.tuitionlord.database
 
 class SettlementRepository(
     private val database: TuitionDatabase
-) {
-    fun getSettlementByCycleId(cycleId: String) : Settlement? =
-        database.tuitionQueries.getSettlementByCycleId(cycleId).executeAsOneOrNull()
+): BaseRepository <Settlement> {
+
+    override fun getByID(id: String) : Settlement? =
+        database.tuitionQueries.getSettlementByCycleId(id).executeAsOneOrNull()
 
 
     fun getSettlementsForStudent(studentId: String) :List<Settlement> =
         database.tuitionQueries.getSettlementsForStudent(studentId).executeAsList()
 
-    fun insertSettlement(settlement: Settlement) {
+    override fun insert(item: Settlement) {
         database.tuitionQueries.insertSettlement(
-            id = settlement.id,
-            student_id = settlement.student_id,
-            cycle_id = settlement.cycle_id,
-            sessions_counted = settlement.sessions_counted,
-            amount = settlement.amount,
-            payment_status = settlement.payment_status,
-            collected_at = settlement.collected_at,
-            settled_at = settlement.settled_at,
-            updated_at = settlement.updated_at,
-            note = settlement.note
+            id = item.id,
+            student_id = item.student_id,
+            cycle_id = item.cycle_id,
+            sessions_counted = item.sessions_counted,
+            amount = item.amount,
+            payment_status = item.payment_status,
+            collected_at = item.collected_at,
+            settled_at = item.settled_at,
+            updated_at = item.updated_at,
+            note = item.note
         )
     }
 }

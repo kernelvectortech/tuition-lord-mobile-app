@@ -14,7 +14,7 @@ object DatabaseExample {
         val repository = StudentRepository(database)
         val timestamp = LocalDateTime.now().toString()
 
-        repository.insertStudent(
+        repository.insert(
             Student(
                 id = "example-student-1",
                 name = "Example Student",
@@ -38,7 +38,7 @@ object DatabaseExample {
         val database = TuitionDatabaseFactory.create(context)
         val repository = CycleRepository(database)
 
-        repository.insertCycle(
+        repository.insert(
             Cycle(
             id = "cycle-1",
             student_id = "example-student-1",
@@ -75,7 +75,7 @@ object DatabaseExample {
             updated_at = timestamp,
             is_archived = 0
         )
-        studentRepository.insertStudent(student)
+        studentRepository.insert(student)
 
         val cycle = Cycle(
             id = "cycle-1",
@@ -87,7 +87,7 @@ object DatabaseExample {
             settled_at = null,
             updated_at = "2026-08-01T10:00:00"
         )
-        cycleRepository.insertCycle(cycle)
+        cycleRepository.insert(cycle)
 
         val classDay = Class_day(
             id = "class-1",
@@ -155,7 +155,7 @@ object DatabaseExample {
             is_archived = 0
         )
 
-        studentRepository.insertStudent(student)
+        studentRepository.insert(student)
 
         val cycle = Cycle(
             id = "cycle-1",
@@ -168,7 +168,7 @@ object DatabaseExample {
             updated_at = timestamp
         )
 
-        cycleRepository.insertCycle(cycle)
+        cycleRepository.insert(cycle)
 
         val settlement = Settlement(
             id = "settlement-1",
@@ -183,10 +183,10 @@ object DatabaseExample {
             note = "Test settlement"
         )
 
-        settlementRepository.insertSettlement(settlement)
+        settlementRepository.insert(settlement)
 
         val result =
-            settlementRepository.getSettlementByCycleId("cycle-1")
+            settlementRepository.getByID("cycle-1")
 
         Log.d("DB_TEST", result.toString())
     }
