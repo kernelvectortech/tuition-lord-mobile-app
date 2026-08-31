@@ -18,7 +18,7 @@ class MarkTodayUseCase(
 
         val activeCycle = cycleRepository.getActiveCycle(studentId) ?: return
 
-        classDayRepository.insertClassDay(
+        classDayRepository.insert(
             Class_day(
                 id = UUID.randomUUID().toString(),
                 student_id = studentId,

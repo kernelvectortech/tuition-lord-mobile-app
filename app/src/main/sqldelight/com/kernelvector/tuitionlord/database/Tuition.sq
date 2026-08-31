@@ -79,6 +79,10 @@ SELECT * FROM student
 WHERE is_archived = 0
 ORDER BY name;
 
+getAllStudents:
+SELECT * FROM student
+ORDER BY name;
+
 getStudentById:
 SELECT * FROM student
 WHERE id = ?;
@@ -90,6 +94,25 @@ INSERT INTO student (
     created_at, updated_at, is_archived
 )
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateStudent:
+UPDATE student
+SET
+    name = ?,
+    monthly_rate = ?,
+    cycle_length_sessions = ?,
+    student_phone = ?,
+    guardian_name = ?,
+    guardian_phone = ?,
+    address = ?,
+    subject = ?,
+    updated_at = ?,
+    is_archived = ?
+WHERE id = ?;
+
+deleteStudent:
+DELETE FROM student
+WHERE id = ?;
 
 archiveStudent:
 UPDATE student
@@ -110,6 +133,11 @@ INSERT INTO cycle (
 )
 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
+getAllCycles:
+SELECT *
+FROM cycle
+ORDER BY start_date DESC;
+
 getActiveCycle:
 SELECT *
 FROM cycle
@@ -119,6 +147,22 @@ AND status = 'ACTIVE';
 getCycleById:
 SELECT *
 FROM cycle
+WHERE id = ?;
+
+updateCycle:
+UPDATE cycle
+SET
+    student_id = ?,
+    idx = ?,
+    start_date = ?,
+    target_sessions = ?,
+    status = ?,
+    settled_at = ?,
+    updated_at = ?
+WHERE id = ?;
+
+deleteCycle:
+DELETE FROM cycle
 WHERE id = ?;
 
 settleCycle:
@@ -145,6 +189,16 @@ INSERT INTO class_day (
 )
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
+getAllClassDays:
+SELECT *
+FROM class_day
+ORDER BY date DESC;
+
+getClassDayById:
+SELECT *
+FROM class_day
+WHERE id = ?;
+
 getClassDaysForStudent:
 SELECT *
 FROM class_day
@@ -157,6 +211,23 @@ FROM class_day
 WHERE cycle_id = ?
 AND status = 'HELD';
 
+updateClassDay:
+UPDATE class_day
+SET
+    student_id = ?,
+    cycle_id = ?,
+    date = ?,
+    slot = ?,
+    status = ?,
+    source = ?,
+    note = ?,
+    updated_at = ?
+WHERE id = ?;
+
+deleteClassDay:
+DELETE FROM class_day
+WHERE id = ?;
+
 updateClassDayStatus:
 UPDATE class_day
 SET
@@ -164,6 +235,16 @@ SET
     updated_at = ?
 WHERE id = ?;
 
+
+getAllStudentSchedules:
+SELECT *
+FROM student_schedule
+ORDER BY student_id, day_of_week;
+
+getStudentScheduleById:
+SELECT *
+FROM student_schedule
+WHERE id = ?;
 
 getSchedulesForStudent:
 SELECT *
@@ -181,10 +262,34 @@ INSERT INTO student_schedule (
 )
 VALUES (?, ?, ?, ?, ?, ?);
 
+updateStudentSchedule:
+UPDATE student_schedule
+SET
+    student_id = ?,
+    day_of_week = ?,
+    start_time = ?,
+    duration = ?,
+    updated_at = ?
+WHERE id = ?;
+
 deleteStudentSchedule:
 DELETE FROM student_schedule
 WHERE id = ?;
 
+deleteSchedulesForStudent:
+DELETE FROM student_schedule
+WHERE student_id = ?;
+
+
+getAllSettlements:
+SELECT *
+FROM settlement
+ORDER BY settled_at DESC;
+
+getSettlementById:
+SELECT *
+FROM settlement
+WHERE id = ?;
 
 getSettlementByCycleId:
 SELECT *
@@ -211,3 +316,21 @@ INSERT INTO settlement (
     note
 )
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateSettlement:
+UPDATE settlement
+SET
+    student_id = ?,
+    cycle_id = ?,
+    sessions_counted = ?,
+    amount = ?,
+    payment_status = ?,
+    collected_at = ?,
+    settled_at = ?,
+    updated_at = ?,
+    note = ?
+WHERE id = ?;
+
+deleteSettlement:
+DELETE FROM settlement
+WHERE id = ?;
