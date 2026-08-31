@@ -172,6 +172,39 @@ class StudentServiceImplTest {
         assertEquals(carol, result.first())
     }
 
+    // -------------------------------------------------------------------------
+    // exists
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun testExistsReflectsPresence() {
+        assertTrue(service.exists("1"))
+        assertFalse(service.exists("999"))
+    }
+
+    @Test
+    fun testExistsIsFalseAfterDelete() {
+        service.delete("1")
+        assertFalse(service.exists("1"))
+    }
+
+    // -------------------------------------------------------------------------
+    // store isolation
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun testGetAllReturnsASnapshotNotTheLiveStore() {
+        val snapshot = service.getAll()
+        service.delete("1")
+        // The previously returned list must not shrink with the store
+        assertEquals(3, snapshot.size)
+        assertEquals(2, service.getAll().size)
+    }
+
+    // -------------------------------------------------------------------------
+    // findByArchivedStatus
+    // -------------------------------------------------------------------------
+
     @Test
     fun testFindByArchivedStatusReturnsEmptyWhenNoneMatch() {
         // Archive everyone

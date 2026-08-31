@@ -1,27 +1,47 @@
 package com.kernelvector.tuitionlord.database
 
-import android.R.id
-
-
-
 class StudentScheduleRepository(
     private val database: TuitionDatabase
-) {
-    fun getSchedulesForStudent(studentId: String) : List<Student_schedule> =
+) : BaseRepository<Student_schedule, String> {
+
+    override fun getAll(): List<Student_schedule> =
+        database.tuitionQueries.getAllStudentSchedules().executeAsList()
+
+    override fun getById(id: String): Student_schedule? =
+        database.tuitionQueries.getStudentScheduleById(id).executeAsOneOrNull()
+
+    override fun insert(item: Student_schedule) {
+        database.tuitionQueries.insertStudentSchedule(
+            id = item.id,
+            student_id = item.student_id,
+            day_of_week = item.day_of_week,
+            start_time = item.start_time,
+            duration = item.duration,
+            updated_at = item.updated_at
+        )
+    }
+
+    override fun update(item: Student_schedule) {
+        database.tuitionQueries.updateStudentSchedule(
+            student_id = item.student_id,
+            day_of_week = item.day_of_week,
+            start_time = item.start_time,
+            duration = item.duration,
+            updated_at = item.updated_at,
+            id = item.id
+        )
+    }
+
+    override fun delete(id: String) {
+        database.tuitionQueries.deleteStudentSchedule(id)
+    }
+
+    fun getSchedulesForStudent(studentId: String): List<Student_schedule> =
         database.tuitionQueries.getSchedulesForStudent(studentId)
             .executeAsList()
 
-    fun deleteStudentSchedule(studentId: String) = database.tuitionQueries
-        .deleteStudentSchedule(studentId)
-
-    fun insertStudentSchedule(studentSchedule: Student_schedule) {
-        database.tuitionQueries.insertStudentSchedule(
-            id = studentSchedule.id,
-            student_id = studentSchedule.student_id,
-            day_of_week = studentSchedule.day_of_week,
-            start_time = studentSchedule.start_time,
-            duration = studentSchedule.duration,
-            updated_at = studentSchedule.updated_at
-        )
+    /** Clears a student's whole weekly routine, for re-saving it in one go. */
+    fun deleteSchedulesForStudent(studentId: String) {
+        database.tuitionQueries.deleteSchedulesForStudent(studentId)
     }
 }

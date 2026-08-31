@@ -102,7 +102,7 @@ object DatabaseExample {
             updated_at = timestamp
         )
 
-        classDayRepository.insertClassDay(classDay)
+        classDayRepository.insert(classDay)
         val result =
             classDayRepository.getClassDaysForStudent("example-student-2")
 //        result.forEach {
@@ -124,7 +124,7 @@ object DatabaseExample {
             updated_at = timestamp
         )
 
-        scheduleRepository.insertStudentSchedule(schedule)
+        scheduleRepository.insert(schedule)
 
         val schedules = scheduleRepository.getSchedulesForStudent(
                 "example-student-2"
@@ -186,7 +186,7 @@ object DatabaseExample {
         settlementRepository.insert(settlement)
 
         val result =
-            settlementRepository.getByID("cycle-1")
+            settlementRepository.getByCycleId("cycle-1")
 
         Log.d("DB_TEST", result.toString())
     }
