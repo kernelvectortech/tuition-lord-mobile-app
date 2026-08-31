@@ -1,6 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.sqldelight)
+}
+
+sqldelight {
+    databases {
+        create("TuitionDatabase") {
+            packageName.set("com.kernelvector.tuitionlord.database")
+        }
+    }
 }
 
 android {
@@ -86,6 +95,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.play.services.ads)
+    implementation(libs.sqldelight.android.driver)
     
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
